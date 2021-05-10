@@ -1,12 +1,15 @@
-import { Add_SUBSCRIBER, REMOVE_SUBSCRIBER } from "./actionType";
+import {
+  ADD_SUBSCRIBER,
+  REMOVE_SUBSCRIBER,
+  FETCHED_MOVIES,
+} from "./actionType";
 
-const initialState = {
-  count: 370,
+const initial = {
+  count: 300,
 };
-
-const subscribersReducer = (state = initialState, action) => {
+export const subscriberReducer = (state = initial, action) => {
   switch (action.type) {
-    case Add_SUBSCRIBER:
+    case ADD_SUBSCRIBER:
       return {
         ...state,
         count: state.count + 1,
@@ -21,4 +24,11 @@ const subscribersReducer = (state = initialState, action) => {
   }
 };
 
-export default subscribersReducer;
+export const fetchedMovieReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCHED_MOVIES:
+      return action.payload;
+    default:
+      return state;
+  }
+};

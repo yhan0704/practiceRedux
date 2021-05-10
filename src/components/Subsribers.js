@@ -1,26 +1,42 @@
-import React from "react";
-import { connect } from "react-redux";
-import { addSubscriber } from "../redux/subscribers/actions";
+import React, { useEffect } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { addSubscriber, fetchedMovie } from "../redux/subscribers/actions";
 
-function Subsribers(props) {
+export const Subsribers = (props) => {
+  const dispatch = useDispatch();
+  const movies = useSelector((state) => state.fetchedMovie);
+  const subScribers = useSelector((state) => state.subscribers);
+
+  useEffect(() => {
+    dispatch(fetchedMovie());
+  }, []);
+
+  const searchedMovies = movies.filter((movie) => movie.title.includes("sit"));
+
+  const searchedMovie = () => {
+    return searchedMovies.map((movie) => <p>{movie.title}</p>);
+  };
+
   return (
     <div>
-      <p>subscribers:{props.count}</p>
-      <button onClick={() => props.addSubscriber()}>subscribe</button>
+      Subscribers:{subScribers.count}
+      <br />
+      {/* <button onClick={() => props.addSubscriber()}>subscribe</button> */}
+      {/* <p>
+        {movies.map((movie) => (
+          <h3>{movie.title}</h3>
+        ))}
+      </p> */}
+      <h1>{searchedMovie().length}</h1>
+      <h3>{searchedMovie()}</h3>
     </div>
   );
-}
-
-const mapStateToProps = (state) => {
-  return {
-    count: state.count,
-  };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addSubscriber: () => dispatch(addSubscriber()),
-//   };
-// };
+const mapStateToProps = ({ subscribers }) => {
+  return {
+    count: subscribers.count,
+  };
+};
 
 export default connect(mapStateToProps, { addSubscriber })(Subsribers);
