@@ -2,16 +2,18 @@ import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { addSubscriber, fetchedMovie } from "../redux/subscribers/actions";
 
-export const Subsribers = (props) => {
+export const Subsribers = () => {
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.fetchedMovie);
   const subScribers = useSelector((state) => state.subscribers);
 
   useEffect(() => {
     dispatch(fetchedMovie());
-  }, []);
+  }, [dispatch]);
 
-  const searchedMovies = movies.filter((movie) => movie.title.includes("sit"));
+  const searchedMovies = movies.filter((movie) =>
+    movie.title.includes("libero")
+  );
 
   const searchedMovie = () => {
     return searchedMovies.map((movie) => <p>{movie.title}</p>);
